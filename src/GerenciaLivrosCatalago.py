@@ -1,11 +1,13 @@
 from FilaLivros import filaLivros
+import json
 
 def gerenciar_fila_livros():
-    # Exemplo de uso da fila de livros
-    filaLivros.put("Livro A")
-    filaLivros.put("Livro B")
-    filaLivros.put("Livro C")
-
-    while not filaLivros.empty():
-        livro_atual = filaLivros.get()
-        print(f"Lendo: {livro_atual}")
+    livro = filaLivros.get()
+    arq = open('catalogo_livros.json', 'r', encoding='utf-8')
+    catalogo = json.load(arq)
+    arq.close()
+    if livro in catalogo:
+        print(f'Livro "{livro}" encontrado no catálogo.')
+    else:
+        print(f'Livro "{livro}" não encontrado no catálogo.')
+    filaLivros.task_done()
