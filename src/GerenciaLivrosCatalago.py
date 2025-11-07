@@ -6,8 +6,10 @@ def gerenciar_fila_livros():
     arq = open('catalogo_livros.json', 'r', encoding='utf-8')
     catalogo = json.load(arq)
     arq.close()
-    if livro in catalogo:
-        print(f'Livro "{livro}" encontrado no catálogo.')
-    else:
-        print(f'Livro "{livro}" não encontrado no catálogo.')
+    for livro in catalogo:
+        try:
+            print(f"Livro: {livro['titulo']}, Autor: {livro['autor']}, Ano: {livro['ano']}")
+        except KeyError as e:
+            print(f"Erro ao acessar dados do livro: {e}")
+    print("Livro processado com sucesso.")
     filaLivros.task_done()
